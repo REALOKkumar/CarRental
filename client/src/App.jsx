@@ -7,6 +7,7 @@ import CarDetails from './pages/CarDetails'
 
 import Cars from './pages/Cars'
 import MyBookings from './pages/MyBookings'
+import Footer from './components/Footer'
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false)
@@ -18,6 +19,7 @@ const App = () => {
   return (
     <>
       {!isOwnerPath && <Navbar setShowLogin={setShowLogin} />}
+      {/* navbar will be shown to all the pages exept the login page */}
 
       <Routes>
         <Route path='/' element={<Home/>}/>
@@ -25,6 +27,9 @@ const App = () => {
         <Route path='/cars' element={<Cars/>}/>
         <Route path='/MyBookings' element={<MyBookings/>}/>
       </Routes>
+
+      {!isOwnerPath && <Footer/>} 
+      {/* footer will be shown to all the pages exept the admin dashboard */}
     </> 
   )
 }
