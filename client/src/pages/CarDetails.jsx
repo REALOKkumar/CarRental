@@ -8,6 +8,10 @@ const CarDetails = () => {
   const {id}=useParams()
   const navigate=useNavigate()
   const [car,setCar]=useState(null)
+  const currency=import.meta.env.VITE_CURRENCY;
+  const handleSubmit =async(e)=>{
+    e.preventDefault(); 
+  }
 
   useEffect(()=>{
     setCar(dummyCarData.find(car => car._id===id))
@@ -32,12 +36,12 @@ const CarDetails = () => {
                 <hr className='border-borderColour my-6'/>
                 <div className='grid grid-cols-2 sm:grid-cols-4 gap-4'>
                   {[
-                    {icon:assets.user_icon,text:`${car.seating_capacity} Seats`},
+                    {icon:assets.users_icon,text:`${car.seating_capacity} Seats`},
                     {icon:assets.fuel_icon,text:car.fuel_type},
                     {icon:assets.car_icon,text:car.transmission},
                     {icon:assets.location_icon,text:car.location}
                   ].map(({icon,text})=>(
-                    <div key={text} className='flex flex-col items-center bg-light p-4 rounded-lg'>
+                    <div key={text} className='flex flex-col items-center bg-gray-200 p-4 rounded-lg'>
                       <img src={icon} alt="" className='h-5 mb-2'/>
                       {text}
 
@@ -56,7 +60,7 @@ const CarDetails = () => {
                   <ul className='grid grid-cols-1 sm:grid-cols-2 gap-2 '>
                     {
                       ["360 Camera", "Bluetooth", "GPS", "Heated Seats", "Rear View Mirror"].map((item)=>(
-                        <li key={item} className='text items-center text-gray-500'>
+                        <li key={item} className='flex items-center text-gray-500'>
                           <img src={assets.check_icon} className='h-4 mr-3' alt="" />
                           {item} 
                         </li>
@@ -68,7 +72,29 @@ const CarDetails = () => {
                 </div>
               </div>
             </div>
-          <form></form>
+          <form onSubmit={handleSubmit} className='shadow-lg h-max sticky top-18 rounded-xl p-6 space-y-6 text gray-500'>
+                    <p className='flex item-center justify-between text-2xl text-gray-800 font-semibold '>{currency}{car.pricePerDay} <span className='text-base text-gray-400 font-normal'>per day</span></p>
+
+                    <hr className='border-bordercolor my-6' />
+
+                    <div className='flex flex-col gap-2'>
+                      <label htmlFor="pickup-date">Pickup Date</label>
+                      <input type="date" className='border border-bordercolorpx-3 py-2 rounded-lg' required
+                                          id='pickup-date' min={new Date().toISOString().split('T')[0]} />
+                    </div>
+
+                    <div className='flex flex-col gap-2'>
+                      <label htmlFor="return-date">Return Date</label>
+                      <input type="date" className='border border-bordercolorpx-3 py-2 rounded-lg' required
+                                          id='return-date'  />
+                    </div>
+
+                    <button className='w-full bg-blue-500 hover:bg-primary-dull
+                    transition-all py-3 font-medium text-white rounded-xl
+                    cursor-pointer'>Book Now</button>
+
+                    <p className='text-center text-sm'>No credit card required to reserve</p>
+          </form>
         </div>
       
 
